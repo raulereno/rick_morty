@@ -1,22 +1,51 @@
 const axios = require("axios");
-const { Character } = require("./../db");
-let characters = [];
+const { Character, Location } = require("./../db");
 
-let aux = 0;
-const callToApi = async (url) => {
-  await axios
-    .get(url)
-    .then(async (data) => {
-      characters.push(data.data.results);
-      if (data.data.info.next && aux < 2) {
-        aux++;
-        await callToApi(data.data.info.next);
-      }
-    })
-    .catch((err) => console.log(err));
+// let characters = [];
+// let aux = 0;
+// const addToDb = async (characters) => {
+//   await characters.forEach(async (character) => {
+//     try {
+//       const newCharacter = await Character.create({
+//         ...character,
+//         createInDB: false,
+//         id: undefined,
+//         status: character.status.toLowerCase(),
+//         gender: character.gender.toLowerCase(),
+//       });
 
-  return characters;
-};
+//       const location = await axios
+//         .get(character.origin.url)
+//         .then((data) => data.data)
+//         .catch((err) => console.log(err));
+
+//       if (location) {
+//         const newLocation = await Location.create({
+//           ...location,
+//           id: undefined,
+//         });
+//         newLocation.addCharacter(newCharacter);
+//       }
+//     } catch (error) {
+//       console.log(error.message);
+//     }
+//   });
+// };
+
+// const callToApi = async (url) => {
+//   await axios
+//     .get(url)
+//     .then(async (data) => {
+//       characters.push(data.data.results);
+//       if (data.data.info.next && aux < 2) {
+//         aux++;
+//         await callToApi(data.data.info.next);
+//       }
+//     })
+//     .catch((err) => console.log(err));
+
+//   return characters;
+// };
 
 const callToDB = async () => {
   const characters = Character.findAll();
@@ -25,9 +54,12 @@ const callToDB = async () => {
 };
 
 const allCharacters = async (url) => {
-  const charactersInAPI = await callToApi(url);
+  // const charactersInAPI = await callToApi(url);
+  // await addToDb(charactersInAPI.flat());
+
+  // return [];
   const charactersInDB = await callToDB();
-  return charactersInAPI.concat(charactersInDB);
+  return charactersInDB;
 };
 
 const createCharacter = async (character) => {

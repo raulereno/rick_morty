@@ -29,8 +29,8 @@ modelDefiners.forEach((model) => model(sequelize));
 const { Location } = sequelize.models;
 const { Character } = sequelize.models;
 
-Character.hasOne(Location);
-Location.belongsToMany(Character, { through: "LocationCharacters" });
+Location.hasMany(Character);
+Character.belongsTo(Location);
 
 module.exports = {
   conn: sequelize,

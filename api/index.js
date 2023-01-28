@@ -4,7 +4,7 @@ const PORT = 3001;
 
 try {
   server.listen(PORT, async () => {
-    await conn.sync({ force: true });
+    await conn.sync({ force: false });
     console.log(`Server listen in port: ${PORT}`);
   });
 } catch (error) {
