@@ -1,15 +1,20 @@
 
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Navbar } from './components';
-import { Home } from './pages';
-import "./styles/index.scss"
+import { Home, Landing, Notfound } from './pages';
+import "./styles/index.scss";
 
 
 function App() {
   return (
-    <div className="App">
-        <Navbar/>
-        <Home/>
-    </div>
+    <BrowserRouter>
+      <Navbar/>
+      <Routes>
+        <Route path='/' element={<Landing/>}/>
+        <Route path='/home' element={<Home/>}/>
+        <Route path='*' element={<Notfound />}/>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
